@@ -1,0 +1,696 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Хранилище Model" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="ВидТура">
+          <Key>
+            <PropertyRef Name="КодВидТура" />
+          </Key>
+          <Property Name="КодВидТура" Type="int" Nullable="false" />
+          <Property Name="ВидТура" Type="nchar" MaxLength="15" />
+        </EntityType>
+        <EntityType Name="Должность">
+          <Key>
+            <PropertyRef Name="КодДолжности" />
+          </Key>
+          <Property Name="КодДолжности" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="НазваниеДолжности" Type="nchar" MaxLength="15" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ИнформацияКлиента">
+          <Key>
+            <PropertyRef Name="КодКлиента" />
+          </Key>
+          <Property Name="КодКлиента" Type="int" Nullable="false" />
+          <Property Name="Имя" Type="nchar" MaxLength="15" />
+          <Property Name="Фамилия" Type="nchar" MaxLength="15" />
+          <Property Name="ДатаРождения" Type="date" />
+          <Property Name="КодПола" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Питание">
+          <Key>
+            <PropertyRef Name="КодПитания" />
+          </Key>
+          <Property Name="КодПитания" Type="int" Nullable="false" />
+          <Property Name="ВидПитания" Type="nchar" MaxLength="15" />
+        </EntityType>
+        <EntityType Name="Пол">
+          <Key>
+            <PropertyRef Name="КодПола" />
+          </Key>
+          <Property Name="КодПола" Type="int" Nullable="false" />
+          <Property Name="Пол" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Пользователь">
+          <Key>
+            <PropertyRef Name="КодПользователя" />
+          </Key>
+          <Property Name="КодПользователя" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Имя" Type="nchar" MaxLength="15" />
+          <Property Name="Фамилия" Type="nchar" MaxLength="15" />
+          <Property Name="Пол" Type="nchar" MaxLength="10" />
+          <Property Name="Логин" Type="nchar" MaxLength="30" />
+          <Property Name="Пароль" Type="int" Nullable="false" />
+          <Property Name="КодРоли" Type="int" Nullable="false" />
+          <Property Name="КодДолжности" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Проживание">
+          <Key>
+            <PropertyRef Name="КодПроживания" />
+          </Key>
+          <Property Name="КодПроживания" Type="int" Nullable="false" />
+          <Property Name="ВидПроживания" Type="nchar" MaxLength="15" />
+        </EntityType>
+        <EntityType Name="Роли">
+          <Key>
+            <PropertyRef Name="КодРоли" />
+          </Key>
+          <Property Name="КодРоли" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Роль" Type="nchar" MaxLength="15" />
+        </EntityType>
+        <EntityType Name="Страны">
+          <Key>
+            <PropertyRef Name="КодСтарны" />
+          </Key>
+          <Property Name="КодСтарны" Type="int" Nullable="false" />
+          <Property Name="Страна" Type="nchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Тур">
+          <Key>
+            <PropertyRef Name="КодТура" />
+          </Key>
+          <Property Name="КодТура" Type="int" Nullable="false" />
+          <Property Name="Название" Type="nchar" MaxLength="20" />
+          <Property Name="Цена" Type="money" />
+          <Property Name="КодСтраны" Type="int" Nullable="false" />
+          <Property Name="КодВидТура" Type="int" Nullable="false" />
+          <Property Name="КодПитания" Type="int" Nullable="false" />
+          <Property Name="КодПроживания" Type="int" Nullable="false" />
+          <Property Name="КодКлиента" Type="int" />
+        </EntityType>
+        <EntityType Name="Фото">
+          <Key>
+            <PropertyRef Name="КодПользователя" />
+          </Key>
+          <Property Name="КодПользователя" Type="int" Nullable="false" />
+          <Property Name="ФотоПольз" Type="nvarchar" MaxLength="50" />
+          <Property Name="ФотоБинар" Type="varbinary(max)" />
+        </EntityType>
+        <Association Name="FK_ИнформацияКлиента_Пол">
+          <End Role="Пол" Type="Self.Пол" Multiplicity="1" />
+          <End Role="ИнформацияКлиента" Type="Self.ИнформацияКлиента" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Пол">
+              <PropertyRef Name="КодПола" />
+            </Principal>
+            <Dependent Role="ИнформацияКлиента">
+              <PropertyRef Name="КодПола" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Пользователь_Должность">
+          <End Role="Должность" Type="Self.Должность" Multiplicity="1" />
+          <End Role="Пользователь" Type="Self.Пользователь" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Должность">
+              <PropertyRef Name="КодДолжности" />
+            </Principal>
+            <Dependent Role="Пользователь">
+              <PropertyRef Name="КодДолжности" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Пользователь_Роли">
+          <End Role="Роли" Type="Self.Роли" Multiplicity="1" />
+          <End Role="Пользователь" Type="Self.Пользователь" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Роли">
+              <PropertyRef Name="КодРоли" />
+            </Principal>
+            <Dependent Role="Пользователь">
+              <PropertyRef Name="КодРоли" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Тур_ВидТура">
+          <End Role="ВидТура" Type="Self.ВидТура" Multiplicity="1" />
+          <End Role="Тур" Type="Self.Тур" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ВидТура">
+              <PropertyRef Name="КодВидТура" />
+            </Principal>
+            <Dependent Role="Тур">
+              <PropertyRef Name="КодВидТура" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Тур_ИнформацияКлиента">
+          <End Role="ИнформацияКлиента" Type="Self.ИнформацияКлиента" Multiplicity="0..1" />
+          <End Role="Тур" Type="Self.Тур" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ИнформацияКлиента">
+              <PropertyRef Name="КодКлиента" />
+            </Principal>
+            <Dependent Role="Тур">
+              <PropertyRef Name="КодКлиента" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Тур_Питание">
+          <End Role="Питание" Type="Self.Питание" Multiplicity="1" />
+          <End Role="Тур" Type="Self.Тур" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Питание">
+              <PropertyRef Name="КодПитания" />
+            </Principal>
+            <Dependent Role="Тур">
+              <PropertyRef Name="КодПитания" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Тур_Проживание">
+          <End Role="Проживание" Type="Self.Проживание" Multiplicity="1" />
+          <End Role="Тур" Type="Self.Тур" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Проживание">
+              <PropertyRef Name="КодПроживания" />
+            </Principal>
+            <Dependent Role="Тур">
+              <PropertyRef Name="КодПроживания" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Тур_Страны">
+          <End Role="Страны" Type="Self.Страны" Multiplicity="1" />
+          <End Role="Тур" Type="Self.Тур" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Страны">
+              <PropertyRef Name="КодСтарны" />
+            </Principal>
+            <Dependent Role="Тур">
+              <PropertyRef Name="КодСтраны" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Фото_Пользователь">
+          <End Role="Пользователь" Type="Self.Пользователь" Multiplicity="1" />
+          <End Role="Фото" Type="Self.Фото" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Пользователь">
+              <PropertyRef Name="КодПользователя" />
+            </Principal>
+            <Dependent Role="Фото">
+              <PropertyRef Name="КодПользователя" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище ModelContainer">
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ВидТура" EntityType="Self.ВидТура" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Должность" EntityType="Self.Должность" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ИнформацияКлиента" EntityType="Self.ИнформацияКлиента" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Питание" EntityType="Self.Питание" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Пол" EntityType="Self.Пол" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Пользователь" EntityType="Self.Пользователь" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Проживание" EntityType="Self.Проживание" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Роли" EntityType="Self.Роли" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Страны" EntityType="Self.Страны" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Тур" EntityType="Self.Тур" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Фото" EntityType="Self.Фото" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_ИнформацияКлиента_Пол" Association="Self.FK_ИнформацияКлиента_Пол">
+            <End Role="Пол" EntitySet="Пол" />
+            <End Role="ИнформацияКлиента" EntitySet="ИнформацияКлиента" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Пользователь_Должность" Association="Self.FK_Пользователь_Должность">
+            <End Role="Должность" EntitySet="Должность" />
+            <End Role="Пользователь" EntitySet="Пользователь" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Пользователь_Роли" Association="Self.FK_Пользователь_Роли">
+            <End Role="Роли" EntitySet="Роли" />
+            <End Role="Пользователь" EntitySet="Пользователь" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Тур_ВидТура" Association="Self.FK_Тур_ВидТура">
+            <End Role="ВидТура" EntitySet="ВидТура" />
+            <End Role="Тур" EntitySet="Тур" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Тур_ИнформацияКлиента" Association="Self.FK_Тур_ИнформацияКлиента">
+            <End Role="ИнформацияКлиента" EntitySet="ИнформацияКлиента" />
+            <End Role="Тур" EntitySet="Тур" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Тур_Питание" Association="Self.FK_Тур_Питание">
+            <End Role="Питание" EntitySet="Питание" />
+            <End Role="Тур" EntitySet="Тур" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Тур_Проживание" Association="Self.FK_Тур_Проживание">
+            <End Role="Проживание" EntitySet="Проживание" />
+            <End Role="Тур" EntitySet="Тур" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Тур_Страны" Association="Self.FK_Тур_Страны">
+            <End Role="Страны" EntitySet="Страны" />
+            <End Role="Тур" EntitySet="Тур" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Фото_Пользователь" Association="Self.FK_Фото_Пользователь">
+            <End Role="Пользователь" EntitySet="Пользователь" />
+            <End Role="Фото" EntitySet="Фото" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="Entities3" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="sysdiagrams" EntityType="Model.sysdiagrams" />
+          <EntitySet Name="ВидТура" EntityType="Model.ВидТура" />
+          <EntitySet Name="Должность" EntityType="Model.Должность" />
+          <EntitySet Name="ИнформацияКлиента" EntityType="Model.ИнформацияКлиента" />
+          <EntitySet Name="Питание" EntityType="Model.Питание" />
+          <EntitySet Name="Пол" EntityType="Model.Пол" />
+          <EntitySet Name="Пользователь" EntityType="Model.Пользователь" />
+          <EntitySet Name="Проживание" EntityType="Model.Проживание" />
+          <EntitySet Name="Роли" EntityType="Model.Роли" />
+          <EntitySet Name="Страны" EntityType="Model.Страны" />
+          <EntitySet Name="Тур" EntityType="Model.Тур" />
+          <EntitySet Name="Фото" EntityType="Model.Фото" />
+          <AssociationSet Name="FK_Тур_ВидТура" Association="Model.FK_Тур_ВидТура">
+            <End Role="ВидТура" EntitySet="ВидТура" />
+            <End Role="Тур" EntitySet="Тур" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Пользователь_Должность" Association="Model.FK_Пользователь_Должность">
+            <End Role="Должность" EntitySet="Должность" />
+            <End Role="Пользователь" EntitySet="Пользователь" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ИнформацияКлиента_Пол" Association="Model.FK_ИнформацияКлиента_Пол">
+            <End Role="Пол" EntitySet="Пол" />
+            <End Role="ИнформацияКлиента" EntitySet="ИнформацияКлиента" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Тур_ИнформацияКлиента" Association="Model.FK_Тур_ИнформацияКлиента">
+            <End Role="ИнформацияКлиента" EntitySet="ИнформацияКлиента" />
+            <End Role="Тур" EntitySet="Тур" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Тур_Питание" Association="Model.FK_Тур_Питание">
+            <End Role="Питание" EntitySet="Питание" />
+            <End Role="Тур" EntitySet="Тур" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Пользователь_Роли" Association="Model.FK_Пользователь_Роли">
+            <End Role="Роли" EntitySet="Роли" />
+            <End Role="Пользователь" EntitySet="Пользователь" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Фото_Пользователь" Association="Model.FK_Фото_Пользователь">
+            <End Role="Пользователь" EntitySet="Пользователь" />
+            <End Role="Фото" EntitySet="Фото" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Тур_Проживание" Association="Model.FK_Тур_Проживание">
+            <End Role="Проживание" EntitySet="Проживание" />
+            <End Role="Тур" EntitySet="Тур" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Тур_Страны" Association="Model.FK_Тур_Страны">
+            <End Role="Страны" EntitySet="Страны" />
+            <End Role="Тур" EntitySet="Тур" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="ВидТура">
+          <Key>
+            <PropertyRef Name="КодВидТура" />
+          </Key>
+          <Property Name="КодВидТура" Type="Int32" Nullable="false" />
+          <Property Name="ВидТура1" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Тур" Relationship="Model.FK_Тур_ВидТура" FromRole="ВидТура" ToRole="Тур" />
+        </EntityType>
+        <EntityType Name="Должность">
+          <Key>
+            <PropertyRef Name="КодДолжности" />
+          </Key>
+          <Property Name="КодДолжности" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="НазваниеДолжности" Type="String" Nullable="false" MaxLength="15" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Пользователь" Relationship="Model.FK_Пользователь_Должность" FromRole="Должность" ToRole="Пользователь" />
+        </EntityType>
+        <EntityType Name="ИнформацияКлиента">
+          <Key>
+            <PropertyRef Name="КодКлиента" />
+          </Key>
+          <Property Name="КодКлиента" Type="Int32" Nullable="false" />
+          <Property Name="Имя" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+          <Property Name="Фамилия" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+          <Property Name="ДатаРождения" Type="DateTime" Precision="0" />
+          <Property Name="КодПола" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Пол" Relationship="Model.FK_ИнформацияКлиента_Пол" FromRole="ИнформацияКлиента" ToRole="Пол" />
+          <NavigationProperty Name="Тур" Relationship="Model.FK_Тур_ИнформацияКлиента" FromRole="ИнформацияКлиента" ToRole="Тур" />
+        </EntityType>
+        <EntityType Name="Питание">
+          <Key>
+            <PropertyRef Name="КодПитания" />
+          </Key>
+          <Property Name="КодПитания" Type="Int32" Nullable="false" />
+          <Property Name="ВидПитания" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Тур" Relationship="Model.FK_Тур_Питание" FromRole="Питание" ToRole="Тур" />
+        </EntityType>
+        <EntityType Name="Пол">
+          <Key>
+            <PropertyRef Name="КодПола" />
+          </Key>
+          <Property Name="КодПола" Type="Int32" Nullable="false" />
+          <Property Name="Пол1" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="ИнформацияКлиента" Relationship="Model.FK_ИнформацияКлиента_Пол" FromRole="Пол" ToRole="ИнформацияКлиента" />
+        </EntityType>
+        <EntityType Name="Пользователь">
+          <Key>
+            <PropertyRef Name="КодПользователя" />
+          </Key>
+          <Property Name="КодПользователя" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Имя" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+          <Property Name="Фамилия" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+          <Property Name="Пол" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Логин" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+          <Property Name="Пароль" Type="Int32" Nullable="false" />
+          <Property Name="КодРоли" Type="Int32" Nullable="false" />
+          <Property Name="КодДолжности" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Должность" Relationship="Model.FK_Пользователь_Должность" FromRole="Пользователь" ToRole="Должность" />
+          <NavigationProperty Name="Роли" Relationship="Model.FK_Пользователь_Роли" FromRole="Пользователь" ToRole="Роли" />
+          <NavigationProperty Name="Фото" Relationship="Model.FK_Фото_Пользователь" FromRole="Пользователь" ToRole="Фото" />
+        </EntityType>
+        <EntityType Name="Проживание">
+          <Key>
+            <PropertyRef Name="КодПроживания" />
+          </Key>
+          <Property Name="КодПроживания" Type="Int32" Nullable="false" />
+          <Property Name="ВидПроживания" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Тур" Relationship="Model.FK_Тур_Проживание" FromRole="Проживание" ToRole="Тур" />
+        </EntityType>
+        <EntityType Name="Роли">
+          <Key>
+            <PropertyRef Name="КодРоли" />
+          </Key>
+          <Property Name="КодРоли" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Роль" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Пользователь" Relationship="Model.FK_Пользователь_Роли" FromRole="Роли" ToRole="Пользователь" />
+        </EntityType>
+        <EntityType Name="Страны">
+          <Key>
+            <PropertyRef Name="КодСтарны" />
+          </Key>
+          <Property Name="КодСтарны" Type="Int32" Nullable="false" />
+          <Property Name="Страна" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Тур" Relationship="Model.FK_Тур_Страны" FromRole="Страны" ToRole="Тур" />
+        </EntityType>
+        <EntityType Name="Тур">
+          <Key>
+            <PropertyRef Name="КодТура" />
+          </Key>
+          <Property Name="КодТура" Type="Int32" Nullable="false" />
+          <Property Name="Название" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="Цена" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="КодСтраны" Type="Int32" Nullable="false" />
+          <Property Name="КодВидТура" Type="Int32" Nullable="false" />
+          <Property Name="КодПитания" Type="Int32" Nullable="false" />
+          <Property Name="КодПроживания" Type="Int32" Nullable="false" />
+          <Property Name="КодКлиента" Type="Int32" />
+          <NavigationProperty Name="ВидТура" Relationship="Model.FK_Тур_ВидТура" FromRole="Тур" ToRole="ВидТура" />
+          <NavigationProperty Name="ИнформацияКлиента" Relationship="Model.FK_Тур_ИнформацияКлиента" FromRole="Тур" ToRole="ИнформацияКлиента" />
+          <NavigationProperty Name="Питание" Relationship="Model.FK_Тур_Питание" FromRole="Тур" ToRole="Питание" />
+          <NavigationProperty Name="Проживание" Relationship="Model.FK_Тур_Проживание" FromRole="Тур" ToRole="Проживание" />
+          <NavigationProperty Name="Страны" Relationship="Model.FK_Тур_Страны" FromRole="Тур" ToRole="Страны" />
+        </EntityType>
+        <EntityType Name="Фото">
+          <Key>
+            <PropertyRef Name="КодПользователя" />
+          </Key>
+          <Property Name="КодПользователя" Type="Int32" Nullable="false" />
+          <Property Name="ФотоПольз" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ФотоБинар" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="Пользователь" Relationship="Model.FK_Фото_Пользователь" FromRole="Фото" ToRole="Пользователь" />
+        </EntityType>
+        <Association Name="FK_Тур_ВидТура">
+          <End Type="Model.ВидТура" Role="ВидТура" Multiplicity="1" />
+          <End Type="Model.Тур" Role="Тур" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ВидТура">
+              <PropertyRef Name="КодВидТура" />
+            </Principal>
+            <Dependent Role="Тур">
+              <PropertyRef Name="КодВидТура" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Пользователь_Должность">
+          <End Type="Model.Должность" Role="Должность" Multiplicity="1" />
+          <End Type="Model.Пользователь" Role="Пользователь" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Должность">
+              <PropertyRef Name="КодДолжности" />
+            </Principal>
+            <Dependent Role="Пользователь">
+              <PropertyRef Name="КодДолжности" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ИнформацияКлиента_Пол">
+          <End Type="Model.Пол" Role="Пол" Multiplicity="1" />
+          <End Type="Model.ИнформацияКлиента" Role="ИнформацияКлиента" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Пол">
+              <PropertyRef Name="КодПола" />
+            </Principal>
+            <Dependent Role="ИнформацияКлиента">
+              <PropertyRef Name="КодПола" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Тур_ИнформацияКлиента">
+          <End Type="Model.ИнформацияКлиента" Role="ИнформацияКлиента" Multiplicity="0..1" />
+          <End Type="Model.Тур" Role="Тур" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ИнформацияКлиента">
+              <PropertyRef Name="КодКлиента" />
+            </Principal>
+            <Dependent Role="Тур">
+              <PropertyRef Name="КодКлиента" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Тур_Питание">
+          <End Type="Model.Питание" Role="Питание" Multiplicity="1" />
+          <End Type="Model.Тур" Role="Тур" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Питание">
+              <PropertyRef Name="КодПитания" />
+            </Principal>
+            <Dependent Role="Тур">
+              <PropertyRef Name="КодПитания" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Пользователь_Роли">
+          <End Type="Model.Роли" Role="Роли" Multiplicity="1" />
+          <End Type="Model.Пользователь" Role="Пользователь" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Роли">
+              <PropertyRef Name="КодРоли" />
+            </Principal>
+            <Dependent Role="Пользователь">
+              <PropertyRef Name="КодРоли" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Фото_Пользователь">
+          <End Type="Model.Пользователь" Role="Пользователь" Multiplicity="1" />
+          <End Type="Model.Фото" Role="Фото" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Пользователь">
+              <PropertyRef Name="КодПользователя" />
+            </Principal>
+            <Dependent Role="Фото">
+              <PropertyRef Name="КодПользователя" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Тур_Проживание">
+          <End Type="Model.Проживание" Role="Проживание" Multiplicity="1" />
+          <End Type="Model.Тур" Role="Тур" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Проживание">
+              <PropertyRef Name="КодПроживания" />
+            </Principal>
+            <Dependent Role="Тур">
+              <PropertyRef Name="КодПроживания" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Тур_Страны">
+          <End Type="Model.Страны" Role="Страны" Multiplicity="1" />
+          <End Type="Model.Тур" Role="Тур" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Страны">
+              <PropertyRef Name="КодСтарны" />
+            </Principal>
+            <Dependent Role="Тур">
+              <PropertyRef Name="КодСтраны" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище ModelContainer" CdmEntityContainer="Entities3">
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="Model.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ВидТура">
+            <EntityTypeMapping TypeName="Model.ВидТура">
+              <MappingFragment StoreEntitySet="ВидТура">
+                <ScalarProperty Name="ВидТура1" ColumnName="ВидТура" />
+                <ScalarProperty Name="КодВидТура" ColumnName="КодВидТура" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Должность">
+            <EntityTypeMapping TypeName="Model.Должность">
+              <MappingFragment StoreEntitySet="Должность">
+                <ScalarProperty Name="НазваниеДолжности" ColumnName="НазваниеДолжности" />
+                <ScalarProperty Name="КодДолжности" ColumnName="КодДолжности" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ИнформацияКлиента">
+            <EntityTypeMapping TypeName="Model.ИнформацияКлиента">
+              <MappingFragment StoreEntitySet="ИнформацияКлиента">
+                <ScalarProperty Name="КодПола" ColumnName="КодПола" />
+                <ScalarProperty Name="ДатаРождения" ColumnName="ДатаРождения" />
+                <ScalarProperty Name="Фамилия" ColumnName="Фамилия" />
+                <ScalarProperty Name="Имя" ColumnName="Имя" />
+                <ScalarProperty Name="КодКлиента" ColumnName="КодКлиента" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Питание">
+            <EntityTypeMapping TypeName="Model.Питание">
+              <MappingFragment StoreEntitySet="Питание">
+                <ScalarProperty Name="ВидПитания" ColumnName="ВидПитания" />
+                <ScalarProperty Name="КодПитания" ColumnName="КодПитания" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Пол">
+            <EntityTypeMapping TypeName="Model.Пол">
+              <MappingFragment StoreEntitySet="Пол">
+                <ScalarProperty Name="Пол1" ColumnName="Пол" />
+                <ScalarProperty Name="КодПола" ColumnName="КодПола" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Пользователь">
+            <EntityTypeMapping TypeName="Model.Пользователь">
+              <MappingFragment StoreEntitySet="Пользователь">
+                <ScalarProperty Name="КодДолжности" ColumnName="КодДолжности" />
+                <ScalarProperty Name="КодРоли" ColumnName="КодРоли" />
+                <ScalarProperty Name="Пароль" ColumnName="Пароль" />
+                <ScalarProperty Name="Логин" ColumnName="Логин" />
+                <ScalarProperty Name="Пол" ColumnName="Пол" />
+                <ScalarProperty Name="Фамилия" ColumnName="Фамилия" />
+                <ScalarProperty Name="Имя" ColumnName="Имя" />
+                <ScalarProperty Name="КодПользователя" ColumnName="КодПользователя" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Проживание">
+            <EntityTypeMapping TypeName="Model.Проживание">
+              <MappingFragment StoreEntitySet="Проживание">
+                <ScalarProperty Name="ВидПроживания" ColumnName="ВидПроживания" />
+                <ScalarProperty Name="КодПроживания" ColumnName="КодПроживания" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Роли">
+            <EntityTypeMapping TypeName="Model.Роли">
+              <MappingFragment StoreEntitySet="Роли">
+                <ScalarProperty Name="Роль" ColumnName="Роль" />
+                <ScalarProperty Name="КодРоли" ColumnName="КодРоли" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Страны">
+            <EntityTypeMapping TypeName="Model.Страны">
+              <MappingFragment StoreEntitySet="Страны">
+                <ScalarProperty Name="Страна" ColumnName="Страна" />
+                <ScalarProperty Name="КодСтарны" ColumnName="КодСтарны" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Тур">
+            <EntityTypeMapping TypeName="Model.Тур">
+              <MappingFragment StoreEntitySet="Тур">
+                <ScalarProperty Name="КодКлиента" ColumnName="КодКлиента" />
+                <ScalarProperty Name="КодПроживания" ColumnName="КодПроживания" />
+                <ScalarProperty Name="КодПитания" ColumnName="КодПитания" />
+                <ScalarProperty Name="КодВидТура" ColumnName="КодВидТура" />
+                <ScalarProperty Name="КодСтраны" ColumnName="КодСтраны" />
+                <ScalarProperty Name="Цена" ColumnName="Цена" />
+                <ScalarProperty Name="Название" ColumnName="Название" />
+                <ScalarProperty Name="КодТура" ColumnName="КодТура" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Фото">
+            <EntityTypeMapping TypeName="Model.Фото">
+              <MappingFragment StoreEntitySet="Фото">
+                <ScalarProperty Name="ФотоБинар" ColumnName="ФотоБинар" />
+                <ScalarProperty Name="ФотоПольз" ColumnName="ФотоПольз" />
+                <ScalarProperty Name="КодПользователя" ColumnName="КодПользователя" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

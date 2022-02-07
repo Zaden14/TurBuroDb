@@ -1,0 +1,17 @@
+﻿<Application x:Class="TurBuroDb.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:TurBuroDb"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <Style TargetType="StackPanel">
+            <Setter Property="Background" Value="LightBlue"/>
+        </Style>
+        <Style TargetType="Grid">
+            <Setter Property="Background" Value="LightBlue"/>
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="LightYellow"/>
+        </Style>
+    </Application.Resources>
+</Application>

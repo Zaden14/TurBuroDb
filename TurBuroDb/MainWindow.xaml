@@ -1,0 +1,29 @@
+﻿<Window x:Class="TurBuroDb.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TurBuroDb"
+        mc:Ignorable="d"
+        Title="TurBuroDB" Height="550" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="80"/>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <TextBlock Text="Туристическое бюро Аэроплан" Grid.Row="0" Grid.Column="0"/>
+        <TextBlock Text="Добро пожаловать!" Grid.Row="1" Grid.Column="0"/> 
+        <StackPanel Grid.Column="1" Grid.RowSpan="2" Grid.Row="0" RenderTransformOrigin="0.536,0.713">
+            <Button Content="Вход" Height="20" Click="Button_Click_1"/>
+            <Button Content="Регистрация" Height="20" Click="Button_Click"/>
+            <Button Content="Добавление записей" Name="Time" Height="20"  Click="Time_Click"/>
+            <Button Content="Реклама" Name="rekl" Click="rekl_Click" Width="198" Height="20"/>
+        </StackPanel>
+        <Frame Name="FrmMain" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" NavigationUIVisibility="Hidden"/>
+    </Grid>
+</Window>
