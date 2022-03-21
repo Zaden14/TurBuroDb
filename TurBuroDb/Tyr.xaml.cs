@@ -10,8 +10,8 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Tyr.Classes;
 
 namespace TurBuroDb
 {
@@ -20,10 +20,13 @@ namespace TurBuroDb
     /// </summary>
     public partial class Tyr : Page
     {
+        Service ServiceAcc = new Service();
+        List<ClientService> CS = BaseDB.DB.ClientService.ToList();
         public Tyr()
         {
             InitializeComponent();
             lvLess.ItemsSource = BaseDB.DB.Тур.ToList();
+
         }
 
         public void Del_Click(object sender, RoutedEventArgs e)
@@ -45,6 +48,23 @@ namespace TurBuroDb
             int KodTyr = Convert.ToInt32(button.Uid);
             Тур tyr1 = BaseDB.DB.Тур.FirstOrDefault(y => y.КодТура == KodTyr);
             FrameClass.mainFrame.Navigate(new Str());
+        }
+
+        private void Zapis_Click(object sender, RoutedEventArgs e)
+        {
+            List<ClientService> clientServiceOld = CS.Where(x => x.ID == ServiceAcc.ID).ToList();
+            if (clientServiceOld.Count != 0)
+            {
+                foreach (ClientService cs in clientServiceOld)
+                {
+                    DataBase.db.ClientService.Remove(cs);
+                }
+            }
+            ClientService ms = new ClientService();
+            ms.ServiceID = ServiceAcc.ID;
+            ms.ClientID = CbUsers.SelectedIndex;
+            DataBase.db.ClientService.Add(ms);
+
         }
     }
 }

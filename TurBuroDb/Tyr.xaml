@@ -30,6 +30,7 @@
                                 <TextBlock Text="{Binding КодКлиента}" FontSize="14"/>
                                 <Button Name="Del" Content="Удалить запись" Click="Del_Click" Uid="{Binding КодТура}" />
                                 <Button Name="Redaktor" Content="Редактировать запись" Click="Redaktor_Click"/>
+                                <Button Name="Zapis" Content="Запись" Click="Zapis_Click"/>
                             </StackPanel>
                         </Grid>
                     </Border>
